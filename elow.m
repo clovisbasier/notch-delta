@@ -7,7 +7,7 @@ function y = elow(N,D,S,tf,dt,betaN,betaD,gamma,gammaS,kc,kt,Ntrans,Dtrans)
     N = [N zeros(1,tfs)];   %preallocating space
     D = [D zeros(1,tfs)];   %preallocating space
     S = [S zeros(1,tfs)];   %preallocating space
-    
+
     for k = 1:tfs
         %prod Notch - degradation - cis-inhibiton - transactivation of Notch
         dN = ( betaN - gamma.*N(k) - D(k).*N(k)./kc - Dtrans.*N(k)./kt ).*dt;

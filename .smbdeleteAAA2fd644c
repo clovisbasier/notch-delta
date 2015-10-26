@@ -98,3 +98,36 @@ zlabel('Reporter (10^4 a.u.)')
 
 %% Plot 3 - receiver/sender
 
+sp1 = subplot(2,2,3);
+
+D0 = 200;                %free cis-Delta
+S0 = 0;                  %intracellular domain of Notch
+N0 = betaN./(gamma + D0./kc + Dtrans./kt);  %free Notch
+
+tf = ;                 %t final
+dt = 0.001;              %step
+tfs = tf/dt - 1;         %tf ajusted for step
+
+betaN = 1;               %production rate of Notch
+betaD = 0;               %production rate of Delta
+gamma = 0.1;             %combined degradation and dilution rate
+gammaS = 0.1;            %rate of decay of S
+kc = 0.2;                %strenght of cis-inhibition
+kt = 2;                  %strenght of transactivation
+Ntrans = 0;              %Notch in neighboring cell
+
+
+cell2N = N0;
+cell2D = D0;
+for k = 1:tfs
+    y1 = elowSS(N0,D0,S0,dt,betaN,betaD,gamma,gammaS,kc,kt,cell2N,cell2D);
+    cell1N = y1(1);
+    cell1D = y1(2);
+    scatter(k,cell1D)
+    hold on
+    y2 = elowSS(N0,D0,S0,dt,betaN,betaD,gamma,gammaS,kc,kt,cell1N,cell1D);
+    cell2N = y2(1);
+    cell2D = y2(2);
+    scatter(k,cell2D)
+end
+
